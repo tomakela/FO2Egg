@@ -1,0 +1,44 @@
+/*
+Modified from gl_uihotkeys.ssl
+*/
+#include "..\headers\define.h"
+#include "..\headers\artfid.h"
+#include "..\headers\sfall\sfall.h"
+#include "..\headers\sfall\dik.h"
+
+procedure start;
+
+procedure start begin
+   if game_loaded then begin
+      register_hook(HOOK_KEYPRESS);
+   end else begin
+      variable
+         event := get_sfall_arg,
+         keyDX := get_sfall_arg,
+         dummy;
+
+      if (event) then begin
+         if (keyDX == DIK_F) then begin // F is the key
+            if (read_byte(0x488964) == 0x02) then begin
+               write_byte(0x488964, 0xD5);
+               write_byte(0x488965, 0x01);
+               write_byte(0x4889a4, 0xC3);
+            end else begin
+               dummy = read_byte(0x488964);
+               if (dummy == 0xD8) then begin
+                  write_byte(0x488964, 0x02);
+                  write_byte(0x488965, 0x00);
+               end else begin
+                  write_byte(0x488964, dummy+1);
+               end
+            end
+            dummy=call_offset_r0(0x488961);
+
+            if (call_offset_r1(0x413AF4,2) == 0) then begin // register_begin()
+               dummy=call_offset_r3(0x41518C, dude_obj, obj_art_fid(dude_obj), -1); // register_object_change_fid. dummy "animation" with instant redraw
+               dummy=call_offset_r0(0x413CCC); // register_end()
+            end
+         end
+      end
+   end
+end
