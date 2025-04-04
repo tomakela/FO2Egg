@@ -21,7 +21,7 @@ Press F:
 Fallout2 graphics engine renders the foreground surroundings of the player character transparent. The transparency is complete in the center and gradually changes into opaque. This shape is called "egg" in the data files, and is loaded from data\art\intrface\EGG.FRM and listed third  (i.e. index two when counting from 0) in the INTRFACE.LST. The original EGG.FRM is single channel bitmap with 1 beign transparent, 0 being fully opaque. Transparency is reduced as the pixel value increases from 1 in the middle to 122 at the edges (and zero around it):
 <img width="290" alt="image" src="https://github.com/tomakela/FO2Egg/assets/9822663/0f4d4480-d793-4d32-86c7-6fa6c1f1eabf">
 
-In Alex Balatov's excellent reverse engineering of Fallout2 executable (https://github.com/alexbatalov/fallout2-re), one can find the memory address where the code responsible for loading EGG.FRM resides. This is called before the game enters the main menu, which we can all agree is good and fine.
+In Alex Batalov's excellent reverse engineering of Fallout2 executable (https://github.com/alexbatalov/fallout2-re), one can find the memory address where the code responsible for loading EGG.FRM resides. This is called before the game enters the main menu, which we can all agree is good and fine.
 
 ```
 game/object.c:
